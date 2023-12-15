@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+      "module": "CommonJS",
+      "target": "es6",
+      "sourceMap": true,
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist",
+      "rootDir": "./src" /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */,
+      "resolveJsonModule": true,
+      "moduleResolution": "node",
+      "baseUrl": "./",
+      "paths": {
+        "@/*": ["src/*"],
+        "@realtime": ["src/realtime"],
+        "@realtime/*": ["src/realtime/*"],
+        "@config/*": ["src/config/*"],
+        "@controllers/*": ["src/controllers/*"],
+        "@db/*": ["src/db/*"],
+        "@helpers": ["src/helpers/index"],
+        "@router": ["src/router/index"],
+        "@router/*": ["src/router/*"],
+        "@middlewares": ["src/middlewares/index"],
+      },
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
+  }
