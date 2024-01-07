@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import classNames from "classnames";
 import styles from "./App.module.scss";
 
 import { createRoom } from "@/services/api";
+import { ModeToggle } from "@components/mode-toggle";
 
 const App: FC = () => {
 
@@ -17,9 +17,12 @@ const App: FC = () => {
   }
 
   return (
-    <div className={classNames(styles.main)}>
-      <Button onClick={navigateToRoom} variant="contained">Create a Room</Button>
-    </div>
+    <>
+      <ModeToggle />
+      <div className={classNames(styles.main)}>
+        <button onClick={navigateToRoom}>Create a Room</button>
+      </div>
+    </>
   );
 };
 

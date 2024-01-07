@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from "react";
-import { Typography, TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import classNames from "classnames";
@@ -42,8 +41,8 @@ const Room: FC = () => {
 
   return (
     <div className={classNames(styles.input_wrapper)}>
-      <Typography>Insert YouTube URL</Typography>
-      <TextField
+      <span>Insert YouTube URL</span>
+      <input
         type="text"
         value={url}
         onChange={handleUrlChange}
