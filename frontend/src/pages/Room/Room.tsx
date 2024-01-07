@@ -1,14 +1,20 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Typography, TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
 
-import player from "@player/index";
+import player from "@/lib/player/index";
 
 const Room: FC<{}> = ({ }) => {
 
   const params = useParams();
   const [url, setUrl] = useState('');
   const [ytPlayer, setytPlayer] = useState(null);
+
+  useEffect(() => {
+
+    console.log(params);
+
+  }, []);
 
   const handleUrlChange = (event) => {
     setUrl(event.target.value);
@@ -39,7 +45,7 @@ const Room: FC<{}> = ({ }) => {
         value={url}
         onChange={handleUrlChange}
         onKeyDown={handleKeyPress}
-        />
+      />
       <div className="youtube-player" id="youtube-player"></div>
     </div>
   );
