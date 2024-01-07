@@ -10,7 +10,10 @@
       "request": "launch",
       "cwd": "${workspaceFolder}/backend",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run-script", "dev"],
+      "runtimeArgs": [
+        "run-script",
+        "dev"
+      ],
       "outputCapture": "std"
     }
   ]

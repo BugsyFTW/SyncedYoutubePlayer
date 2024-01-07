@@ -13,9 +13,10 @@ export default defineConfig({
     alias: {
       '@': '/src',
       '@components': '/src/components',
-      '@player': '/src/player',
-      '@utils': '/src/utils',
       '@config': '/src/config',
+      '@hooks': '/src/hooks',
+      '@lib': '/src/lib',
+      '@utils': '/src/utils',
       types: '/src/types'
     }
   }
