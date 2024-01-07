@@ -2,9 +2,12 @@ import { FC, useEffect, useState } from "react";
 import { Typography, TextField } from "@mui/material";
 import { useParams } from "react-router-dom";
 
+import classNames from "classnames";
+import styles from "./Room.module.scss";
+
 import player from "@/lib/player/index";
 
-const Room: FC<{}> = ({ }) => {
+const Room: FC = () => {
 
   const params = useParams();
   const [url, setUrl] = useState('');
@@ -38,7 +41,7 @@ const Room: FC<{}> = ({ }) => {
   }
 
   return (
-    <div className="input-wrapper">
+    <div className={classNames(styles.input_wrapper)}>
       <Typography>Insert YouTube URL</Typography>
       <TextField
         type="text"
@@ -46,7 +49,7 @@ const Room: FC<{}> = ({ }) => {
         onChange={handleUrlChange}
         onKeyDown={handleKeyPress}
       />
-      <div className="youtube-player" id="youtube-player"></div>
+      <div className={classNames(styles.youtube_player)} id="youtube-player"></div>
     </div>
   );
 };

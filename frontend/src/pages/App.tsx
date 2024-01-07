@@ -2,10 +2,12 @@ import { FC } from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import { createRoom } from "@/services/api";
-import "./App.css";
+import classNames from "classnames";
+import styles from "./App.module.scss";
 
-const App: FC<{}> = ({ }) => {
+import { createRoom } from "@/services/api";
+
+const App: FC = () => {
 
   const navigator = useNavigate();
 
@@ -15,7 +17,7 @@ const App: FC<{}> = ({ }) => {
   }
 
   return (
-    <div className="main">
+    <div className={classNames(styles.main)}>
       <Button onClick={navigateToRoom} variant="contained">Create a Room</Button>
     </div>
   );
