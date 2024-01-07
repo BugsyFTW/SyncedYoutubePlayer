@@ -6,9 +6,6 @@ import { getAllUsers } from "@controllers/users";
 import { isAuthenticated } from "@middlewares";
 
 export default (router: Router) => {
-  // Apply middleware
-  router.use(isAuthenticated);
-
   // Setup routes
-  router.get(`${USER_PATH}`, getAllUsers);
+  router.get(`${USER_PATH}`, isAuthenticated, getAllUsers);
 };

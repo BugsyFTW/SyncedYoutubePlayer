@@ -26,6 +26,7 @@ export async function startServer() {
 }
 
 export async function shutdownServer() {
+    console.info('Shutting down... ☹️');
     io.close();
     server.close();
     process.exit(0);

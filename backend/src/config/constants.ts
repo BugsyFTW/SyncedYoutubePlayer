@@ -5,3 +5,4 @@ export const PROCESS_INTERRUPT_CODE = 'SIGINT';
 // Route constants
 export const AUTH_PATH = '/auth';
 export const USER_PATH = '/user';
+export const ROOM_PATH = '/room';

@@ -1,14 +1,16 @@
 import { Router } from 'express';
 
 import authentication from "@router/authentication";
-import users from "@router/users";
+import user from "@router/users";
+import room from "@router/room";
 
 const router = Router();
 
 export default (): Router => {
 
     authentication(router);
-    users(router);
+    user(router);
+    room(router);
 
     return router;
 }

@@ -11,22 +11,19 @@ export const login = async (req: Request, res: Response) => {
 
 
 		if (!email || !password) {
-			res.statusMessage = "Missing email or password";
-			return res.sendStatus(400);
+			return res.status(400).json({ error: "Missing email or password" });
 		}
 
 		const user = await getUserByEmail(email).select("+authentication.salt +authentication.password");
 
 		if (!user) {
-			res.statusMessage = "No user found";
-			return res.sendStatus(400);
+			return res.status(400).json({ error: "No user found" });
 		}
 
 		const expectedHash = authentication(user.authentication.salt, password);
 
 		if (expectedHash !== user.authentication.password) {
-			res.statusMessage = "Wrong password";
-			return res.sendStatus(403);						
+			return res.status(403).json({ error: "Wrong password" });
 		}
 
 		const salt = random();
@@ -36,10 +33,10 @@ export const login = async (req: Request, res: Response) => {
 
 		res.cookie(variables.getCookieName(), user.authentication.sessionToken, { domain: 'localhost', path: '/' });
 
-		return res.status(200).json(user).end();
+		return res.status(200).json(user);
 	} catch (error) {
-		console.log(error);
-		return res.sendStatus(400);
+		console.error(error);
+		return res.status(400);
 	}
 }
 
@@ -49,15 +46,13 @@ export const register = async (req: Request, res: Response) => {
 		const { username, email, password } = req.body;
 
 		if (!username || !email || !password) {
-			res.statusMessage = "Missing username or email or password";
-			return res.sendStatus(400);
+			return res.status(400).json({ error: "Missing username or email or password" });
 		}
 
 		const existingUser = await getUserByEmail(email);
 
 		if (existingUser) {
-			res.statusMessage = "User with email already exists";
-			return res.sendStatus(400);
+			return res.status(400).json({ error: "User with email already exists" });
 		}
 
 		const salt = random();
@@ -70,7 +65,7 @@ export const register = async (req: Request, res: Response) => {
 			}
 		});
 
-		return res.status(300).json(user).end();
+		return res.status(200).json(user);
 	} catch (error) {
 		console.error(error);
 		return res.sendStatus(400);

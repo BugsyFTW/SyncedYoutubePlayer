@@ -1,7 +1,0 @@
-import { Server as SocketServer, Socket } from "socket.io";
-
-export default (io: SocketServer, socket: Socket): void => {
-  
-  
-
-}
