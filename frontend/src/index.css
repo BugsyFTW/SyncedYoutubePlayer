@@ -4,6 +4,9 @@
 
 @layer base {
   :root {
+    --gradient-from: 0, 0%, 100%;
+    --gradient-to: 226, 60%, 93%;
+
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
 
@@ -33,10 +36,15 @@
     --ring: 240 10% 3.9%;
 
     --radius: 0.5rem;
+
+    height: 100%;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
+    --gradient-from: 240, 5%, 4%;
+    --gradient-to: 240, 29%, 9%;
+
+    --background: 240, 5%, 4%;
     --foreground: 0 0% 98%;
 
     --card: 240 10% 3.9%;
@@ -63,6 +71,8 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+
+    height: 100%;
   }
 }
 
@@ -72,6 +82,9 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-repeat: no-repeat;
+    @apply
+    /*bg-background*/
+    text-foreground bg-gradient-radial;
   }
 }

@@ -5,7 +5,7 @@ import classNames from "classnames";
 import styles from "./App.module.scss";
 
 import { createRoom } from "@/services/api";
-import { ModeToggle } from "@components/mode-toggle";
+import { Button } from "@components/ui/button";
 
 const App: FC = () => {
 
@@ -17,12 +17,9 @@ const App: FC = () => {
   }
 
   return (
-    <>
-      <ModeToggle />
-      <div className={classNames(styles.main)}>
-        <button onClick={navigateToRoom}>Create a Room</button>
-      </div>
-    </>
+    <div className={classNames(styles.main)}>
+      <Button className="h-24 px-36" onClick={navigateToRoom}>Create a Room</Button>
+    </div>
   );
 };
 

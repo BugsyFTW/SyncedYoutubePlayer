@@ -5,8 +5,12 @@
   align-items: center;
 }
 
-.youtube_player {
-  height: 390;
-  width: 400;
-  background-color: blue;
+.player_wrapper {
+  margin: auto;
+  width: 75%;
+}
+
+.skeleton {
+  height: 600;
+  width: 1080;
 }

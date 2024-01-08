@@ -4,13 +4,18 @@ import { useParams } from "react-router-dom";
 import classNames from "classnames";
 import styles from "./Room.module.scss";
 
-import player from "@/lib/player/index";
+import { PLAYER_ID, ID_REGEX } from '@config/constants';
+import player from "@/lib/player";
 
-const Room: FC = () => {
+import { Label } from "@components/ui/label";
+import { Input } from "@components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export const Room: FC = () => {
 
   const params = useParams();
   const [url, setUrl] = useState('');
-  const [ytPlayer, setytPlayer] = useState(null);
+  const [ytPlayer, setytPlayer] = useState<YT.Player>(null);
 
   useEffect(() => {
 
@@ -23,34 +28,48 @@ const Room: FC = () => {
   }
 
   const handleKeyPress = async (event) => {
-    if (event.keyCode == 13) { // TK2EKx0UtzE
-      if (ytPlayer == null) { // mt6d1yjnpuo
-        setytPlayer(await player('youtube-player', {
-          videoId: url,
+    if (event.keyCode == 13 && url.length > 0) {
+      const id = getIdFromUrl(url);
+      if (ytPlayer == null) {
+        setytPlayer(await player(PLAYER_ID, {
+          videoId: id,
+          height: 270,
+          width: 480,
           playerVars: {
             'controls': 1,
           }
         }));
-        console.log(ytPlayer);
       } else {
-        console.log(ytPlayer);
-        ytPlayer.loadVideoById(url);
+        ytPlayer.loadVideoById(id);
       }
     }
   }
 
+  const getIdFromUrl = (url: string): string => {
+    const match = url.match(ID_REGEX);
+    const id_size = 11; // YouTube ID sizes are 11 digits long.
+    if (match && match[2].length == id_size) {
+      return match[2];
+    }
+    return null;
+  }
+
   return (
-    <div className={classNames(styles.input_wrapper)}>
-      <span>Insert YouTube URL</span>
-      <input
-        type="text"
-        value={url}
-        onChange={handleUrlChange}
-        onKeyDown={handleKeyPress}
-      />
-      <div className={classNames(styles.youtube_player)} id="youtube-player"></div>
-    </div>
+    <>
+      <div className={classNames(styles.input_wrapper)}>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label>Insert YouTube URL</Label>
+          <Input
+            type="text"
+            value={url}
+            onChange={handleUrlChange}
+            onKeyDown={handleKeyPress}
+          />
+        </div>
+      </div>
+      <div className={classNames(styles.player_wrapper)}>
+        <div id={PLAYER_ID} />
+      </div>
+    </>
   );
 };
-
-export default Room;
