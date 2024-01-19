@@ -3,6 +3,12 @@ import { Socket, Server as SocketServer } from "socket.io";
 
 import variables from "@config/variables";
 import initLobby from "@realtime/lobby";
+import { ON_OWNER_VIDEO_CHANGED, ON_USER_CONNECTION, ON_VIDEO_CHANGED } from "@/config/constants";
+
+export type SocketMessage = {
+  roomId: string;
+  msg: string;
+}
 
 export default (server: Server): SocketServer => {
   const io = new SocketServer(server, {
@@ -23,7 +29,14 @@ export default (server: Server): SocketServer => {
       console.log(`User disconnected with ID: ${socket.id} #Reason: ${reason}`);
     });
 
-    initLobby(io, socket);
+    socket.on(ON_USER_CONNECTION, (uid) => {
+      socket.join(uid);
+      // -> Get all rooms = io.sockets.adapter.rooms
+    });
+
+    socket.on(ON_OWNER_VIDEO_CHANGED, (data: SocketMessage) => {
+      socket.to(data.roomId).emit(ON_VIDEO_CHANGED, data.msg);
+    });
 
   });
   return io;

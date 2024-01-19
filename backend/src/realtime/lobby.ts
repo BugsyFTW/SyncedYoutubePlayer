@@ -1,22 +1,16 @@
 import { Server as SocketServer, Socket } from "socket.io";
 
-import { random } from "@helpers";
-const lobbies: Map<string, string> = new Map();
+import { ON_USER_CONNECTION } from "@config/constants";
 
 export default (io: SocketServer, socket: Socket): void => {
 
-   socket.on('createLobby', (socket: Socket) => {
+   socket.on(ON_USER_CONNECTION, (uid) => {
 
-      const user = socket.id;
-
-      const lobbyId = random();
-
-      lobbies.set(lobbyId, "nada");
-
-      socket.join(lobbyId);
+      //const user = socket.id;
+      socket.join(uid);
+      //socket.join(user);
 
       // -> Get all rooms = io.sockets.adapter.rooms
-
    });
 
 }

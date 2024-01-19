@@ -23,14 +23,13 @@ export const createRoom = async (req: Request, res: Response) => {
 export const getRoom = async (req: Request, res: Response) => {
   try {
 
-    const { uid } = req.body;
+    const uid = req.params.id;
 
     if (!uid) {
       return res.status(403).json({ error: "No UID given!" });
     }
 
     const room = await getRoomByUID(uid);
-
     if (!room) {
       return res.status(404).json({ error: `No Room found with the UID: ${uid}` });
     }

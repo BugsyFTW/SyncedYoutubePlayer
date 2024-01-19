@@ -10,15 +10,13 @@ import './index.css';
 import { Header } from './components/header';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ThemeProvider defaultTheme='dark' storageKey="synced-web-ui-theme">
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path='/' element={<App />} />
-          <Route path='/room/:id' element={<Room />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
-  </React.StrictMode>,
+  <ThemeProvider defaultTheme='dark' storageKey="synced-web-ui-theme">
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path='/' element={<App />} />
+        <Route path='/room/:id' element={<Room />} />
+      </Routes>
+    </BrowserRouter>
+  </ThemeProvider>
 );
