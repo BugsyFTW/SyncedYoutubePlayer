@@ -2,8 +2,8 @@ import { Server } from "http";
 import { Socket, Server as SocketServer } from "socket.io";
 
 import variables from "@config/variables";
-import initLobby from "@realtime/lobby";
-import { ON_OWNER_VIDEO_CHANGED, ON_USER_CONNECTION, ON_VIDEO_CHANGED } from "@/config/constants";
+import { ON_OWNER_VIDEO_CHANGED } from "@/config/constants";
+import { SocketEvent } from "@config/constants";
 
 export type SocketMessage = {
   roomId: string;
@@ -20,24 +20,20 @@ export default (server: Server): SocketServer => {
   });
 
   // Centralized 'connection' event handler
-  io.on('connection', (socket: Socket) => {
+  io.on(SocketEvent.CONNECTION, (socket: Socket) => {
 
     console.log(`User connected with ID: ${socket.id}`);
-    //console.log(Object.keys(io.sockets.sockets));
 
-    socket.on("disconnect", (reason) => {
-      console.log(`User disconnected with ID: ${socket.id} #Reason: ${reason}`);
+    socket.on(SocketEvent.DISCONNECT, (reason) => console.log(`User disconnected with ID: ${socket.id} #Reason: ${reason}`));
+
+    // -> Get all rooms = io.sockets.adapter.rooms
+    socket.on(SocketEvent.USER_CONNECTION, (uid) => socket.join(uid));
+
+    socket.on(SocketEvent.LOAD_VIDEO, (data: SocketMessage) => socket.to(data.roomId).emit(SocketEvent.LOADING_VIDEO, data.msg));
+
+    socket.on(SocketEvent.STATE_CHANGE, (data: SocketMessage) => {
+      socket.to(data.roomId).emit(SocketEvent.STATE_CHANGE, data.msg);
     });
-
-    socket.on(ON_USER_CONNECTION, (uid) => {
-      socket.join(uid);
-      // -> Get all rooms = io.sockets.adapter.rooms
-    });
-
-    socket.on(ON_OWNER_VIDEO_CHANGED, (data: SocketMessage) => {
-      socket.to(data.roomId).emit(ON_VIDEO_CHANGED, data.msg);
-    });
-
   });
   return io;
 }
