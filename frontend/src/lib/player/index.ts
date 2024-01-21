@@ -1,4 +1,5 @@
 import load from "load-script";
+import { TIME_CHANGE_EVENT } from "@config/constants";
 
 export type IFrameType = {
 	Player: Function,
@@ -62,7 +63,8 @@ const extendTimeChange = (player: YT.Player) => {
 				const time = data.info.currentTime;
 				const diff = Math.abs(time - lastTimeUpdate);
 
-				// Magic number ;)
+				// Player 'currentTime' updates usually ~200ms to ~300ms, so we set min of 400ms. Could also only check for 1s since the time only changes for every second.
+				// Leaving this this for now.
 				if (diff > 0.400) {
 					dispatchTimeChangeEvent(time);
 				}
@@ -73,6 +75,6 @@ const extendTimeChange = (player: YT.Player) => {
 };
 
 const dispatchTimeChangeEvent = (time: number) => {
-	const event = new CustomEvent('timeChange', { detail: { currentTime: time } });
+	const event = new CustomEvent(TIME_CHANGE_EVENT, { detail: { currentTime: time } });
 	window.dispatchEvent(event);
 };
